@@ -1,0 +1,81 @@
+<style>
+    body{
+        width: 100%;
+        height: 100%;
+        /* margin : 0 0 0 0 ; */
+        margin: 0;
+        background-color: #DFC9CB;
+    }
+    .card{
+        width: 50%;
+        height: 20%;
+        
+        /* radius 는 각을 둥글게 만들어줌 */
+        border-radius: 15px;
+        background-color: white;
+        
+        /* 그림자만들기 */
+        box-shadow: 10px 10px 5px grey;
+        
+        /* 위 왼 아래 오  */
+        margin: 0 auto 0 auto;
+        /* 경계선과 컨텐츠 사이의 거리 */
+        padding: 10px;
+        
+    }
+    .card2{
+        width: 5%;
+        height: 5%;
+        
+        /* radius 는 각을 둥글게 만들어줌 */
+        border-radius: 15px;
+        background-color: rgb(180, 180, 180);
+        
+        /* 그림자만들기 */
+        box-shadow: 10px 10px 5px grey;
+        
+        /* 위 왼 아래 오  */
+        margin: 0 auto;
+        /* 경계선과 컨텐츠 사이의 거리 */
+        padding: 10px;
+    }
+</style>
+
+
+<h1>Detail page</h1>
+
+<h3>제목:{{blog.title}}</h3>
+
+
+<hr>
+
+<p align=center>{{blog.pub_date}} <p align=center class='card2'>{{likes}} 따봉!!!!! </p>
+
+    <p class='card' align=center >{{blog.body}}</p>
+    
+
+    <p align=center><a href="{%url 'edit' blog.id %}">수정하기</a>
+    <a href="{$url 'delete' blog.id %}">삭제하기</a>
+    <a href = "{%url 'list'%}">list</a> </p>
+    
+</p>
+
+<hr>
+{% for comment in comments %}
+<br>작성자 : {{comment.author}}
+<br>내용 : {{comment.body}}
+<br>{{comment.pub_date}}
+<hr>
+{% endfor %}
+
+<!-- 댓글달기 -->
+<form action="/blog/commenting/{{blog.id}}" method="post">
+    {%csrf_token%}
+    <input type="text" name='body'>
+    <button type="submit">작성</button>
+</form>
+
+<!-- 좋아요 -->
+<form action="/blog/like/{{blog.id}}" method="get">
+    <button type="submit">좋아요</button>
+</form>
